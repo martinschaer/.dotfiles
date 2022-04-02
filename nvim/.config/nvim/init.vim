@@ -111,9 +111,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:previm_open_cmd = 'open -a Firefox'
 let g:previm_show_header = 0
 
-" telescope
-lua require('telescope').setup({defaults = {file_sorter = require('telescope.sorters').get_fzy_sorter, layout_strategy='vertical'}})
-
 nnoremap <C-p> :lua require('telescope.builtin').git_files()<cr>
 
 nnoremap <leader>fs <cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep for > ") })<cr>
@@ -217,6 +214,17 @@ if (not status) then return end
 autopairs.setup({
   disable_filetype = { "TelescopePrompt", "vim" }
 })
+
+require 'telescope'.setup {
+  defaults = {
+    file_sorter = require 'telescope.sorters'.get_fzy_sorter,
+    layout_strategy = 'vertical',
+    layout_config = {
+      preview_cutoff = 30
+    }
+  }
+}
+
 EOF
 
 augroup highlight_yank
