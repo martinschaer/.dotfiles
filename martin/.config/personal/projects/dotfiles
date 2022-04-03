@@ -1,0 +1,10 @@
+#!/bin/bash
+echo Welcome to my dotfiles
+cd ~/.dotfiles
+git fetch -p
+echo "---------------------"
+glola | cat
+echo "---------------------"
+gsb
+echo "---------------------"
+

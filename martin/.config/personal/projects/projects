@@ -1,0 +1,5 @@
+#!/bin/bash
+export CD=~/.config/personal/projects
+echo "\n"
+cd ~/.config/personal/projects
+ls

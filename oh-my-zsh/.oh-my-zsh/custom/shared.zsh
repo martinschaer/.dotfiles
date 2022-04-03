@@ -21,11 +21,20 @@ function changeNode14
   fi
 }
 
+function changeNode17
+{
+  echo -n "nvm current: "
+  nvm current
+  if yes_or_no "run: nvm use 17.5.0"; then
+    nvm use 17.5.0
+  fi
+}
+
 menu ()
 {
   echo -n $fg[green]
   echo "\nHello :)${fg[default]}\n"
-  selected=`find $HOME/.config/personal/projects -maxdepth 1 -type f | xargs -L1 basename | fzf --height=10 --reverse --border`
+  selected=`find -L $HOME/.config/personal/projects -maxdepth 1 -type f | xargs -L1 basename | fzf --height=10 --reverse --border`
   if [[ -z $selected ]]; then
     exit 0
   fi
