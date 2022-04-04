@@ -32,14 +32,16 @@ function changeNode17
 
 menu ()
 {
+  clear
   echo -n $fg[green]
   echo "\nHello :)${fg[default]}\n"
-  selected=`find -L $HOME/.config/personal/projects -maxdepth 1 -type f | xargs -L1 basename | fzf --height=10 --reverse --border`
+  selected=`find -L $HOME/.config/personal/projects -maxdepth 1 -type f | xargs -L1 basename | fzf --height=50% --reverse --border`
   if [[ -z $selected ]]; then
     exit 0
   fi
   file=$HOME/.config/personal/projects/$selected
   printf "You selected %s\n" $file
+  clear
   source $file
 }
 
