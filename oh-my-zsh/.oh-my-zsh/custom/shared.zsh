@@ -34,7 +34,13 @@ menu ()
 {
   clear
   echo -n $fg[green]
-  echo "\nHello :)${fg[default]}\n"
+  echo "\n Hello Martin ~\n${fg[default]}\n"
+  if test -f ~/TODO.md; then
+    echo '~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~'
+    awk '/TODO/,/\/TODO/ {print}' ~/TODO.md
+    echo '~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~'
+  fi
+  echo "\n${fg[green]} How can I help you?${fg[default]}\n"
   selected=`find -L $HOME/.config/personal/projects -maxdepth 1 -type f | xargs -L1 basename | fzf --height=50% --reverse --border`
   if [[ -z $selected ]]; then
     exit 0
