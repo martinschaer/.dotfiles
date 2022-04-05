@@ -204,7 +204,8 @@ require 'nvim-treesitter.configs'.setup {
     "json",
     "scss",
     "typescript",
-    "vim"
+    "vim",
+    "vue"
   }
 }
 
