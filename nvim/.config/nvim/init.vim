@@ -108,7 +108,8 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 " previm
-let g:previm_open_cmd = 'open -a Firefox'
+" let g:previm_open_cmd = 'open -a Firefox'
+let g:previm_open_cmd = 'open'
 let g:previm_show_header = 0
 
 nnoremap <C-p> :lua require('telescope.builtin').git_files()<cr>
@@ -202,6 +203,7 @@ require 'nvim-treesitter.configs'.setup {
     "html",
     "javascript",
     "json",
+    "markdown",
     "scss",
     "typescript",
     "vim",
