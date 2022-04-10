@@ -45,8 +45,10 @@ call plug#begin(stdpath('data') . '/plugged')
 
 " Language Client
 " https://betterprogramming.pub/setting-up-neovim-for-web-development-in-2020-d800de3efacd
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-css', 'coc-html', 'coc-json', 'coc-eslint', 'coc-prettier', 'coc-tsserver', 'coc-stylelintplus']
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" let g:coc_global_extensions = ['coc-css', 'coc-html', 'coc-json', 'coc-eslint', 'coc-prettier', 'coc-tsserver', 'coc-stylelintplus']
+Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
 
 " Theme
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
@@ -166,18 +168,18 @@ nnoremap <leader>] :bn<cr>
 nnoremap <leader>[ :bp<cr>
 
 " eslint
-nmap <leader>. <Plug>(coc-codeaction)
+" nmap <leader>. <Plug>(coc-codeaction)
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
 nmap <leader>gy :call CocAction('jumpTypeDefinition', 'vsplit')<CR><C-w>r<C-w>l
 
