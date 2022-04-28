@@ -48,7 +48,8 @@ call plug#begin(stdpath('data') . '/plugged')
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_global_extensions = ['coc-css', 'coc-html', 'coc-json', 'coc-eslint', 'coc-prettier', 'coc-tsserver', 'coc-stylelintplus']
 Plug 'neovim/nvim-lspconfig'
-Plug 'glepnir/lspsaga.nvim'
+" Plug 'glepnir/lspsaga.nvim'
+Plug 'tami5/lspsaga.nvim'
 
 " Theme
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
@@ -181,7 +182,7 @@ nnoremap <leader>[ :bp<cr>
 " nmap <silent> gi <Plug>(coc-implementation)
 " nmap <silent> gr <Plug>(coc-references)
 
-nmap <leader>gy :call CocAction('jumpTypeDefinition', 'vsplit')<CR><C-w>r<C-w>l
+" nmap <leader>gy :call CocAction('jumpTypeDefinition', 'vsplit')<CR><C-w>r<C-w>l
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-h> <C-\><C-N><C-w>h
