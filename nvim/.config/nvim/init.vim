@@ -73,7 +73,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
+
 Plug 'mbbill/undotree'
 
 Plug 'airblade/vim-gitgutter'
@@ -93,7 +94,7 @@ Plug 'windwp/nvim-autopairs'
 call plug#end()
 
 colorscheme onehalfdark
-let g:airline_theme='onehalfdark'
+
 highlight LineNr ctermbg=none
 highlight Normal ctermbg=none
 
@@ -111,10 +112,6 @@ let g:netrw_liststyle = 3
 
 " neoformat
 " let g:neoformat_try_node_exe = 1
-
-" airline
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
 
 " previm
 " let g:previm_open_cmd = 'open -a Firefox'
