@@ -1,3 +1,3 @@
 # To-do
 
-- install lualine
+- install Comment (https://github.com/numToStr/Comment.nvim)
