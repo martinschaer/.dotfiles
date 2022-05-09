@@ -85,7 +85,7 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 " Plug 'peitalin/vim-jsx-typescript'
 
 Plug 'previm/previm'
@@ -329,8 +329,4 @@ augroup THE_PRIMEAGEN
     " trim whitespace
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
-
-" augroup MARTIN
-"    autocmd BufWritePre *.js,*.ts Neoformat
-" augroup END
 
