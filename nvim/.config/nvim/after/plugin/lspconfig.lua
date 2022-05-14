@@ -1,4 +1,22 @@
 local lspconfig = require 'lspconfig'
+local lspconfig_configs = require 'lspconfig.configs'
+local lspconfig_util = require 'lspconfig.util'
+
+local function on_new_config(new_config, new_root_dir)
+  local function get_typescript_server_path(root_dir)
+    local project_root = lspconfig_util.find_node_modules_ancestor(root_dir)
+    return project_root and (lspconfig_util.path.join(project_root, 'node_modules', 'typescript', 'lib', 'tsserverlibrary.js'))
+      or ''
+  end
+
+  if
+    new_config.init_options
+    and new_config.init_options.typescript
+    and new_config.init_options.typescript.serverPath == ''
+  then
+    new_config.init_options.typescript.serverPath = get_typescript_server_path(new_root_dir)
+  end
+end
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -13,7 +31,7 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 local on_attach = function(client, bufnr)
   if client.name == "tsserver" then
     client.resolved_capabilities.document_formatting = false
-  elseif client.name == "volar" then
+  elseif client.name == "volar_html" then
     client.resolved_capabilities.document_formatting = false
   end
 
@@ -43,6 +61,116 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+-- ****************************************************************************
+-- Volar
+-- ****************************************************************************
+
+local volar_cmd = {'vue-language-server', '--stdio'}
+local volar_root_dir = lspconfig_util.root_pattern 'package.json'
+
+lspconfig_configs.volar_api = {
+  default_config = {
+    cmd = volar_cmd,
+    root_dir = volar_root_dir,
+    on_new_config = on_new_config,
+    filetypes = { 'vue'},
+    -- If you want to use Volar's Take Over Mode (if you know, you know)
+    --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+    init_options = {
+      typescript = {
+        serverPath = ''
+      },
+      languageFeatures = {
+        implementation = true, -- new in @volar/vue-language-server v0.33
+        references = true,
+        definition = true,
+        typeDefinition = true,
+        callHierarchy = true,
+        hover = true,
+        rename = true,
+        renameFileRefactoring = true,
+        signatureHelp = true,
+        codeAction = true,
+        workspaceSymbol = true,
+        completion = {
+          defaultTagNameCase = 'both',
+          defaultAttrNameCase = 'kebabCase',
+          getDocumentNameCasesRequest = false,
+          getDocumentSelectionRequest = false,
+        },
+      }
+    },
+  }
+}
+lspconfig.volar_api.setup{
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+lspconfig_configs.volar_doc = {
+  default_config = {
+    cmd = volar_cmd,
+    root_dir = volar_root_dir,
+    on_new_config = on_new_config,
+
+    filetypes = { 'vue'},
+    -- If you want to use Volar's Take Over Mode (if you know, you know):
+    --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+    init_options = {
+      typescript = {
+        serverPath = ''
+      },
+      languageFeatures = {
+        implementation = true, -- new in @volar/vue-language-server v0.33
+        documentHighlight = true,
+        documentLink = true,
+        codeLens = { showReferencesNotification = true},
+        -- not supported - https://github.com/neovim/neovim/pull/15723
+        semanticTokens = false,
+        diagnostics = true,
+        schemaRequestService = true,
+      }
+    },
+  }
+}
+lspconfig.volar_doc.setup{}
+
+lspconfig_configs.volar_html = {
+  default_config = {
+    cmd = volar_cmd,
+    root_dir = volar_root_dir,
+    on_new_config = on_new_config,
+
+    filetypes = { 'vue'},
+    -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
+    --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    init_options = {
+      typescript = {
+        serverPath = ''
+      },
+      documentFeatures = {
+        selectionRange = true,
+        foldingRange = true,
+        linkedEditingRange = true,
+        documentSymbol = true,
+        -- not supported - https://github.com/neovim/neovim/pull/13654
+        documentColor = false,
+        documentFormatting = {
+          defaultPrintWidth = 100,
+        },
+      }
+    },
+  }
+}
+lspconfig.volar_html.setup{
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+-- ****************************************************************************
+-- Other LSPs
+-- ****************************************************************************
+
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { 'tsserver', 'html', 'cssls', 'sumneko_lua' }
@@ -57,8 +185,8 @@ for _, lsp in pairs(servers) do
   }
 end
 
-lspconfig.volar.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  filetypes = { 'vue' },
-}
+-- lspconfig.volar.setup {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   filetypes = { 'vue' },
+-- }
