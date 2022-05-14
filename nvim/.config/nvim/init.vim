@@ -94,6 +94,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 Plug 'windwp/nvim-autopairs'
 
+Plug 'kdheepak/tabline.nvim'
 call plug#end()
 
 colorscheme onehalfdark
@@ -260,6 +261,8 @@ require 'telescope'.setup {
     }
   }
 }
+
+require 'tabline'.setup()
 
 EOF
 
