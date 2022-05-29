@@ -178,6 +178,16 @@ lspconfig.gopls.setup {
 }
 
 -- ****************************************************************************
+-- Stylelint
+-- ****************************************************************************
+lspconfig.stylelint_lsp.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  -- filetypes = { "css", "less", "scss", "sugarss", "vue", "wxss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  filetypes = { "css", "less", "scss", "sugarss" },
+}
+
+-- ****************************************************************************
 -- Other LSPs
 -- ****************************************************************************
 
