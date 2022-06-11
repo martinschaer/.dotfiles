@@ -209,6 +209,7 @@ lua <<EOF
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "css",
+    "cpp",
     "go",
     "html",
     "javascript",

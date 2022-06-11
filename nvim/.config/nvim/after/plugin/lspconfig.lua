@@ -188,6 +188,22 @@ lspconfig.stylelint_lsp.setup {
 }
 
 -- ****************************************************************************
+-- Arduino
+-- ****************************************************************************
+lspconfig.arduino_language_server.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "cpp", "arduino" },
+  cmd = {
+    "/Users/martinschaer/go/bin/arduino-language-server",
+    "-clangd", "/usr/bin/clangd",
+    "-cli", "/usr/local/bin/arduino-cli",
+    "-cli-config", "/Users/martinschaer/Library/Arduino15/arduino-cli.yaml",
+    "-fqbn", "arduino:mbed_nano:nanorp2040connect"
+  }
+}
+
+-- ****************************************************************************
 -- Other LSPs
 -- ****************************************************************************
 

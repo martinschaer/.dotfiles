@@ -25,4 +25,5 @@ local sources = {
 null_ls.setup({
   sources = sources,
   diagnostics_format = "░ #{m}",
+  -- debug = true
 })
