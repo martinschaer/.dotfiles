@@ -124,3 +124,8 @@ export PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export FZF_BASE=/usr/local/bin/fzf
+
+# pnpm
+export PNPM_HOME="/Users/m.corrales.schaer/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
