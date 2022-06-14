@@ -167,6 +167,20 @@ lspconfig.volar_html.setup {
 }
 
 -- ****************************************************************************
+-- TS
+-- ****************************************************************************
+lspconfig.tsserver.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_dir = lspconfig_util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd()
+  -- root_dir = function(pattern)
+  --  local cwd  = vim.loop.cwd()
+  --  local root = lspconfig_util.root_pattern("package.json", "tsconfig.json", ".git")(pattern)
+  --  return root or cwd
+  -- end;
+}
+
+-- ****************************************************************************
 -- Gopls
 -- ****************************************************************************
 lspconfig.gopls.setup {
@@ -209,7 +223,7 @@ lspconfig.arduino_language_server.setup {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'html', 'cssls', 'sumneko_lua', 'graphql' }
+local servers = { 'html', 'cssls', 'sumneko_lua', 'graphql' }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
@@ -220,9 +234,3 @@ for _, lsp in pairs(servers) do
     }
   }
 end
-
--- lspconfig.volar.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
---   filetypes = { 'vue' },
--- }
