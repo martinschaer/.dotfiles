@@ -54,3 +54,4 @@ menu ()
 }
 
 alias menu="menu"
+alias lg="lazygit"
