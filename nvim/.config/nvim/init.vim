@@ -93,6 +93,7 @@ Plug 'previm/previm'
 Plug 'kyazdani42/nvim-web-devicons'
 
 Plug 'windwp/nvim-autopairs'
+Plug 'numToStr/Comment.nvim'
 
 Plug 'kdheepak/tabline.nvim'
 call plug#end()
@@ -252,6 +253,8 @@ if (not status) then return end
 autopairs.setup({
   disable_filetype = { "TelescopePrompt", "vim" }
 })
+
+require('Comment').setup()
 
 require 'telescope'.setup {
   defaults = {
