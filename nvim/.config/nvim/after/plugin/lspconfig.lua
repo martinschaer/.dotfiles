@@ -32,6 +32,8 @@ local on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = false
   elseif client.name == "volar_html" then
     client.resolved_capabilities.document_formatting = false
+  elseif client.name == "astro" then
+    client.resolved_capabilities.document_formatting = false
   end
 
   -- Enable completion triggered by <c-x><c-o>
@@ -223,7 +225,7 @@ lspconfig.arduino_language_server.setup {
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'html', 'cssls', 'sumneko_lua', 'graphql' }
+local servers = { 'html', 'cssls', 'sumneko_lua', 'graphql', 'astro' }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
