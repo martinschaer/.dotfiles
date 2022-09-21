@@ -47,6 +47,7 @@ call plug#begin(stdpath('data') . '/plugged')
 " https://betterprogramming.pub/setting-up-neovim-for-web-development-in-2020-d800de3efacd
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " let g:coc_global_extensions = ['coc-css', 'coc-html', 'coc-json', 'coc-eslint', 'coc-prettier', 'coc-tsserver', 'coc-stylelintplus']
+Plug 'williamboman/mason.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/nvim-cmp'
@@ -207,6 +208,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 lua <<EOF
+require("mason").setup()
+
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "css",
