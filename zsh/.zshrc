@@ -118,6 +118,9 @@ export NVM_DIR="$HOME/.nvm"
 path+=('$GOPATH/bin')
 export PATH
 
+#
+export PATH="$HOME/.local/bin:$PATH"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -125,7 +128,3 @@ export PATH
 
 export FZF_BASE=/usr/local/bin/fzf
 
-# pnpm
-export PNPM_HOME="/Users/m.corrales.schaer/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end
