@@ -21,6 +21,15 @@ function changeNode14
   fi
 }
 
+function changeNode16
+{
+  echo -n "nvm current: "
+  nvm current
+  if yes_or_no "run: nvm use 16.18.0"; then
+    nvm use 16.18.0
+  fi
+}
+
 function changeNode17
 {
   echo -n "nvm current: "
