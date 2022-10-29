@@ -120,6 +120,9 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- local opts = {}
 -- require("lvim.lsp.manager").setup("eslint", opts)
 
+-- require 'lspconfig'.angularls.setup {}
+require("lvim.lsp.manager").setup("angularls")
+
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
 --     "sumeko_lua",
@@ -166,12 +169,13 @@ formatters.setup {
   -- { command = "isort", filetypes = { "python" } },
   {
     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-    command = "prettierd",
+    -- command = "prettierd \"${INPUT}\"",
+    command = "prettier",
     ---@usage arguments to pass to the formatter
     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
     extra_args = { "--print-with", "100" },
     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-    filetypes = { "typescript", "typescriptreact", "astro" },
+    filetypes = { "typescript", "typescriptreact", "astro", "vue", "html" },
   },
 }
 
@@ -179,12 +183,13 @@ formatters.setup {
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   {
-    name = "eslint_d",
+    name = "eslint",
     filetypes = {
       "javascript",
       "javascriptreact",
       "typescript",
       "typescriptreact",
+      "vue",
     }
   }
   --   { command = "flake8", filetypes = { "python" } },
