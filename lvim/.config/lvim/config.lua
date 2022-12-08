@@ -11,11 +11,14 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = false
-lvim.colorscheme = "lunar"
+-- lvim.colorscheme = "lunar"
 -- lvim.colorscheme = "onedarker"
+lvim.colorscheme = "rose-pine"
+-- lvim.colorscheme = "habamax"
+-- lvim.colorscheme = "desert"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
-lvim.transparent_window = true
+-- lvim.transparent_window = true
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -25,17 +28,15 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<Leader>["] = ":bp<CR>"
 lvim.keys.normal_mode["<Leader>]"] = ":bn<CR>"
-lvim.keys.visual_block_mode["p"] = "\"_dP"
 -- nnoremap <leader>d "_d
 lvim.keys.normal_mode["<Leader>d"] = "_d"
--- vnoremap <leader>d "_d
-lvim.keys.visual_mode["<Leader>d"] = "_d"
 
 -- Move to the end of yanked text after yank and paste
 -- nnoremap p p`]
 lvim.keys.normal_mode["p"] = "p`]"
 -- vnoremap p p`]
-lvim.keys.visual_mode["p"] = "p`]"
+-- lvim.keys.visual_mode["p"] = "p`]"
+lvim.keys.visual_mode["p"] = '"_dP'
 -- vnoremap y y`]
 lvim.keys.visual_mode["y"] = "y`]"
 
@@ -46,8 +47,12 @@ lvim.keys.visual_mode["y"] = "y`]"
 
 vim.opt.clipboard = ""
 vim.opt.colorcolumn = "80"
-vim.opt.listchars = "tab:⇥⇥,trail:⎵,nbsp:⎴"
+-- vim.opt.listchars = "tab:⇥⇥,trail:⎵,nbsp:⎴"
 vim.opt.relativenumber = true
+
+vim.cmd 'set list!' -- show invisible character
+-- vim.cmd 'set lcs=tab:»_,trail:·' -- set lcs=tab:»_,trail:·,eol:$ -- to change the symbol used
+vim.cmd 'set lcs=tab:⇥⇥,trail:⎵,nbsp:⎴' -- set lcs=tab:»_,trail:·,eol:$ -- to change the symbol used
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -110,7 +115,7 @@ lvim.builtin.treesitter.highlight.enable = true
 
 -- generic LSP settings
 
-require("lvim.lsp.manager").setup("angularls")
+-- require("lvim.lsp.manager").setup("angularls")
 
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
@@ -154,8 +159,8 @@ require("lvim.lsp.manager").setup("angularls")
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
---   { command = "black", filetypes = { "python" } },
---   { command = "isort", filetypes = { "python" } },
+  --   { command = "black", filetypes = { "python" } },
+  --   { command = "isort", filetypes = { "python" } },
   {
     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
     -- command = "prettierd \"${INPUT}\"",
@@ -181,28 +186,69 @@ linters.setup {
       "vue",
     }
   }
---   { command = "flake8", filetypes = { "python" } },
---   {
---     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "shellcheck",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--severity", "warning" },
---   },
---   {
---     command = "codespell",
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "javascript", "python" },
---   },
+  --   { command = "flake8", filetypes = { "python" } },
+  --   {
+  --     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+  --     command = "shellcheck",
+  --     ---@usage arguments to pass to the formatter
+  --     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+  --     extra_args = { "--severity", "warning" },
+  --   },
+  --   {
+  --     command = "codespell",
+  --     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+  --     filetypes = { "javascript", "python" },
+  --   },
 }
 
 -- Additional Plugins
--- lvim.plugins = {
---     {
---       "folke/trouble.nvim",
---       cmd = "TroubleToggle",
---     },
--- }
+lvim.plugins = {
+  {
+    -- "folke/trouble.nvim",
+    -- cmd = "TroubleToggle",
+    "rose-pine/neovim",
+    -- config = function()
+    --   local rt = require("rust-tools")
+    --   rt.setup({
+    --     server = {
+    --       on_attach = function(_, bufnr)
+    -- Hover actions
+    -- vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
+    -- Code action groups
+    -- vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    --       end,
+    --     },
+    --   })
+    -- end
+  },
+  {
+    "simrat39/rust-tools.nvim",
+  },
+  { "zbirenbaum/copilot.lua",
+    event = { "VimEnter" },
+    config = function()
+      vim.defer_fn(function()
+        require("copilot").setup {
+          plugin_manager_path = get_runtime_dir() .. "/site/pack/packer",
+        }
+      end, 100)
+    end,
+  },
+
+  { "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua", "nvim-cmp" },
+  },
+}
+
+require("rust-tools").setup({
+  server = {
+    on_attach = require("lvim.lsp").common_on_attach,
+    on_init = require("lvim.lsp").common_on_init,
+  },
+})
+
+lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"
+table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {

@@ -1,3 +1,6 @@
 source $HOME/.config/personal/env
 
 export DOTFILES=$HOME/.dotfiles
+
+# For lazygit custom config
+export XDG_CONFIG_HOME="$HOME/.config"
