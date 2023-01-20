@@ -128,3 +128,5 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export FZF_BASE=/usr/local/bin/fzf
 
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
