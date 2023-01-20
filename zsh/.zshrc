@@ -118,9 +118,15 @@ export NVM_DIR="$HOME/.nvm"
 path+=('$GOPATH/bin')
 export PATH
 
+#
+export PATH="$HOME/.local/bin:$PATH"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export FZF_BASE=/usr/local/bin/fzf
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

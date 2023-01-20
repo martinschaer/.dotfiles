@@ -45,8 +45,18 @@ call plug#begin(stdpath('data') . '/plugged')
 
 " Language Client
 " https://betterprogramming.pub/setting-up-neovim-for-web-development-in-2020-d800de3efacd
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-css', 'coc-html', 'coc-json', 'coc-eslint', 'coc-prettier', 'coc-tsserver', 'coc-stylelintplus']
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" let g:coc_global_extensions = ['coc-css', 'coc-html', 'coc-json', 'coc-eslint', 'coc-prettier', 'coc-tsserver', 'coc-stylelintplus']
+Plug 'williamboman/mason.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'L3MON4D3/LuaSnip'
+
+" Plug 'glepnir/lspsaga.nvim'
+Plug 'tami5/lspsaga.nvim'
 
 " Theme
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
@@ -57,6 +67,7 @@ Plug 'sonph/onehalf', { 'rtp': 'vim' }
 " Plug 'sharkdp/fd'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'p00f/nvim-ts-rainbow'
 Plug 'ryanoasis/vim-devicons'
 
 Plug 'nvim-lua/popup.nvim'
@@ -64,7 +75,10 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
-Plug 'vim-airline/vim-airline'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+
+Plug 'nvim-lualine/lualine.nvim'
+
 Plug 'mbbill/undotree'
 
 Plug 'airblade/vim-gitgutter'
@@ -72,7 +86,7 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 " Plug 'peitalin/vim-jsx-typescript'
 
 Plug 'previm/previm'
@@ -80,11 +94,13 @@ Plug 'previm/previm'
 Plug 'kyazdani42/nvim-web-devicons'
 
 Plug 'windwp/nvim-autopairs'
+Plug 'numToStr/Comment.nvim'
 
+Plug 'kdheepak/tabline.nvim'
 call plug#end()
 
 colorscheme onehalfdark
-let g:airline_theme='onehalfdark'
+
 highlight LineNr ctermbg=none
 highlight Normal ctermbg=none
 
@@ -102,10 +118,6 @@ let g:netrw_liststyle = 3
 
 " neoformat
 " let g:neoformat_try_node_exe = 1
-
-" airline
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
 
 " previm
 " let g:previm_open_cmd = 'open -a Firefox'
@@ -166,20 +178,20 @@ nnoremap <leader>] :bn<cr>
 nnoremap <leader>[ :bp<cr>
 
 " eslint
-nmap <leader>. <Plug>(coc-codeaction)
+" nmap <leader>. <Plug>(coc-codeaction)
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
-nmap <leader>gy :call CocAction('jumpTypeDefinition', 'vsplit')<CR><C-w>r<C-w>l
+" nmap <leader>gy :call CocAction('jumpTypeDefinition', 'vsplit')<CR><C-w>r<C-w>l
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-h> <C-\><C-N><C-w>h
@@ -196,9 +208,12 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 lua <<EOF
+require("mason").setup()
+
 require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "css",
+    "cpp",
     "go",
     "html",
     "javascript",
@@ -208,6 +223,30 @@ require 'nvim-treesitter.configs'.setup {
     "typescript",
     "vim",
     "vue"
+  },
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+  rainbow = {
+    enable = true,
+    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = 1000, -- Do not enable for files with more than n lines, int
+    -- colors = {}, -- table of hex strings
+    -- termcolors = {} -- table of colour name strings
   }
 }
 
@@ -218,6 +257,8 @@ autopairs.setup({
   disable_filetype = { "TelescopePrompt", "vim" }
 })
 
+require('Comment').setup()
+
 require 'telescope'.setup {
   defaults = {
     file_sorter = require 'telescope.sorters'.get_fzy_sorter,
@@ -226,6 +267,64 @@ require 'telescope'.setup {
       preview_cutoff = 30
     }
   }
+}
+
+require 'tabline'.setup()
+
+EOF
+
+" nvim-cmp config based on https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua
+lua <<EOF
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+-- luasnip setup
+local luasnip = require 'luasnip'
+
+-- nvim-cmp setup
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
 }
 
 EOF
@@ -240,8 +339,4 @@ augroup THE_PRIMEAGEN
     " trim whitespace
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
-
-" augroup MARTIN
-"    autocmd BufWritePre *.js,*.ts Neoformat
-" augroup END
 
