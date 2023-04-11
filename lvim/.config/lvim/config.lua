@@ -2,11 +2,14 @@
  THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
  `lvim` is the global options object
 ]]
-
 -- vim options
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
+
+vim.opt.colorcolumn = "80"
+
+vim.cmd 'set list!'
 
 -- general
 lvim.log.level = "info"
@@ -22,35 +25,20 @@ lvim.format_on_save = {
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-lvim.keys.normal_mode["<Leader>["] = ":bp<CR>"
-lvim.keys.normal_mode["<Leader>]"] = ":bn<CR>"
--- nnoremap <leader>d "_d
-lvim.keys.normal_mode["<Leader>d"] = "_d"
 
--- Move to the end of yanked text after yank and paste
--- nnoremap p p`]
+-- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+-- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<Leader>["] = ":BufferLineCyclePrev<CR>"
+lvim.keys.normal_mode["<Leader>]"] = ":BufferLineCycleNext<CR>"
+
 lvim.keys.normal_mode["p"] = "p`]"
--- vnoremap p p`]
--- lvim.keys.visual_mode["p"] = "p`]"
-lvim.keys.visual_mode["p"] = '"_dP'
--- vnoremap y y`]
 lvim.keys.visual_mode["y"] = "y`]"
 
--- unmap a default keymapping
--- vim.keymap.del("n", "<C-Up>")
--- override a default keymapping
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
+lvim.keys.visual_mode["<Leader>p"] = [["_dP]]
+lvim.keys.visual_mode["<Leader>d"] = [["_d]]
 
-vim.opt.clipboard = ""
-vim.opt.colorcolumn = "80"
--- vim.opt.listchars = "tab:⇥⇥,trail:⎵,nbsp:⎴"
-vim.opt.relativenumber = true
-
-vim.cmd 'set list!' -- show invisible character
--- vim.cmd 'set lcs=tab:»_,trail:·' -- set lcs=tab:»_,trail:·,eol:$ -- to change the symbol used
-vim.cmd 'set lcs=tab:⇥⇥,trail:⎵,nbsp:⎴' -- set lcs=tab:»_,trail:·,eol:$ -- to change the symbol used
+lvim.keys.normal_mode["<Leader>y"] = [["+y]]
+lvim.keys.visual_mode["<Leader>y"] = [["+y]]
 
 -- -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
@@ -59,18 +47,23 @@ vim.cmd 'set lcs=tab:⇥⇥,trail:⎵,nbsp:⎴' -- set lcs=tab:»_,trail:·,eol:
 -- -- Change theme settings
 -- lvim.colorscheme = "lunar"
 lvim.colorscheme = "rose-pine"
+-- lvim.colorscheme = "catppuccin-mocha"
+
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-lvim.builtin.bufferline.options.always_show_bufferline = true
+
 lvim.builtin.bufferline.options.show_buffer_close_icons = false
 
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
 
 -- lvim.builtin.treesitter.ignore_install = { "haskell" }
+
+-- -- always installed on startup, useful for parsers without a strict filetype
+-- lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "regex" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
 
@@ -103,14 +96,12 @@ lvim.builtin.treesitter.auto_install = true
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   --   { command = "stylua" },
-  --   {
-  --     command = "prettier",
-  --     extra_args = { "--print-width", "100" },
-  --     filetypes = { "typescript", "typescriptreact" },
-  --   },
-  { command = "prettierd" },
+  {
+    command = "prettierd",
+    --     extra_args = { "--print-width", "100" },
+    --     filetypes = { "typescript", "typescriptreact" },
+  },
 }
-
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   --   { command = "flake8", filetypes = { "python" } },
@@ -119,30 +110,40 @@ linters.setup {
   --     args = { "--severity", "warning" },
   --   },
   {
-    name = "eslint_d",
-    filetype = {
+    command = "eslint_d",
+    filetypes = {
       "javascript",
       "javascriptreact",
       "typescript",
       "typescriptreact",
-      "vue",
     }
   }
 }
 
--- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
+local code_actions = require "lvim.lsp.null-ls.code_actions"
+code_actions.setup {
+  {
+    command = "eslint_d",
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+    }
+  },
+}
+
+-- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
   --     {
   --       "folke/trouble.nvim",
   --       cmd = "TroubleToggle",
   --     },
+  { "rose-pine/neovim" },
+  { "catppuccin/nvim",         name = "catppuccin" },
+  { "simrat39/rust-tools.nvim" },
   {
-    "rose-pine/neovim",
-  },
-  {
-    "simrat39/rust-tools.nvim",
-  },
-  { "zbirenbaum/copilot.lua",
+    "zbirenbaum/copilot.lua",
     event = { "VimEnter" },
     config = function()
       vim.defer_fn(function()
@@ -152,9 +153,53 @@ lvim.plugins = {
       end, 100)
     end,
   },
-
-  { "zbirenbaum/copilot-cmp",
+  {
+    "zbirenbaum/copilot-cmp",
     after = { "copilot.lua", "nvim-cmp" },
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && npm install",
+    ft = "markdown",
+    config = function()
+      -- vim.g.mkdp_auto_start = 1
+      vim.g.mkdp_refresh_slow = 1
+      vim.g.mkdp_theme = 'light'
+    end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufRead",
+    config = function() require "lsp_signature".on_attach() end,
+  },
+  -- {
+  --   "karb94/neoscroll.nvim",
+  --   event = "WinScrolled",
+  --   config = function()
+  --     require('neoscroll').setup({
+  --       -- All these keys will be mapped to their corresponding default scrolling animation
+  --       mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
+  --         '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+  --       hide_cursor = true,          -- Hide cursor while scrolling
+  --       stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+  --       respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+  --       cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+  --       easing_function = nil,       -- Default easing function
+  --       pre_hook = nil,              -- Function to run before the scrolling animation starts
+  --       post_hook = nil,             -- Function to run after the scrolling animation ends
+  --       performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+  --       -- from lunarvim docs
+  --       use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+  --     })
+  --   end
+  -- },
+  {
+    "romgrk/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup {
+        throttle = true, -- Throttles plugin updates (may improve performance)
+      }
+    end
   },
 }
 
