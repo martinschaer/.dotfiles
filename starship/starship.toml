@@ -1,0 +1,34 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$all\
+$fill\
+$time\
+$line_break\
+$character
+"""
+
+[time]
+disabled = false
+
+[line_break]
+disabled = false
+
+[battery]
+full_symbol = "• "
+charging_symbol = "⇡ "
+discharging_symbol = "⇣ "
+unknown_symbol = "❓ "
+empty_symbol = "❗ "
+
+[erlang]
+symbol = "ⓔ "
+
+[nodejs]
+symbol = "[⬢](bold green) "
+
+[pulumi]
+symbol = "🧊 "
+
+[typst]
+symbol = "t "
