@@ -1,6 +1,8 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR __fish_initialized:3800
+SETUVAR __fish_initialized:3100
+SETUVAR _fish_abbr_gf:git\x20fetch
+SETUVAR _fish_abbr_gl:git\x20pull
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:normal
