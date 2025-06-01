@@ -7,3 +7,8 @@ end
 starship init fish | source
 
 source "$HOME/.cargo/env.fish"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
