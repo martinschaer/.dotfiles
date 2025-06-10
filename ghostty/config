@@ -1,7 +1,8 @@
 background-blur-radius = 20
-background-opacity = 0.9
+background-opacity = 0.5
+background = #000000
 theme = GruvboxDark
 font-family = JetBrainsMonoNL Nerd Font Mono
-font-size = 11
-window-decoration = false
+font-size = 14
+macos-titlebar-style = hidden
 
