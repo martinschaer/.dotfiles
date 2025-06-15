@@ -12,3 +12,7 @@ source "$HOME/.cargo/env.fish"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# fly.io
+export FLYCTL_INSTALL="/home/martin/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
