@@ -50,7 +50,8 @@ symbol = " "
 
 [git_branch]
 symbol = " "
-format = '[$symbol$branch(:$remote_branch)]($style) '
+format = '[](black)[$symbol$branch(:$remote_branch)]($style)[](black) '
+style = 'bg:black fg:white'
 
 [git_commit]
 tag_symbol = '  '
@@ -90,4 +91,5 @@ style = "yellow"
 [rust]
 symbol = "󱘗 "
 format = "[${symbol}]($style) "
+style = 'fg:#d65d0e'
 
