@@ -2,6 +2,7 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     abbr --add gf git fetch
     abbr --add gl git pull
+    abbr --add glog git log --oneline --graph --all
 end
 
 starship init fish | source
