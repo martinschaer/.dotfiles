@@ -81,7 +81,9 @@ Unknown = " "
 symbol = "󰏗 "
 
 [bun]
+symbol = " "
 format = "[${symbol}]($style) "
+style = 'white'
 
 [python]
 symbol = " "

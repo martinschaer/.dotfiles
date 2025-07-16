@@ -69,9 +69,9 @@ sketchybar \
            --set chevron icon= label.drawing=off background.drawing=off \
            --add item front_app left \
            --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
-           --subscribe front_app front_app_switched \
-           --add item surreal left \
-           --set surreal label=" Examples and more -> surrealdb.com/docs/labs" icon.drawing=off label.color=0xFFFF00A0 background.color=0xFF15131D label.padding_left=14 label.padding_right=14 padding_left=28
+           --subscribe front_app front_app_switched
+           # --add item surreal left \
+           # --set surreal label=" Examples and more -> surrealdb.com/docs/labs" icon.drawing=off label.color=0xFFFF00A0 background.color=0xFF15131D label.padding_left=14 label.padding_right=14 padding_left=28
 
 ##### Adding Right Items #####
 # In the same way as the left items we can add items to the right side.
