@@ -1,2 +1,3 @@
 #!/bin/bash
-cp -r sketchykar ~/.config
+cp sketchybarrc ~/.config/sketchybar/sketchybarrc
+cp -r plugins ~/.config/sketchybar
