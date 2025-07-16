@@ -2,6 +2,7 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     abbr --add gf git fetch
     abbr --add gl git pull
+    abbr --add glog git log --oneline --graph --all
 end
 
 starship init fish | source
@@ -11,4 +12,8 @@ source "$HOME/.cargo/env.fish"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# fly.io
+export FLYCTL_INSTALL="/home/martin/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
