@@ -1,6 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+$shell\
 $username\
 $hostname\
 $directory\
@@ -94,3 +95,12 @@ style = "yellow"
 symbol = "󱘗 "
 format = "[${symbol}]($style) "
 style = 'fg:#d65d0e'
+
+[shell]
+disabled = false
+fish_indicator = '  '
+zsh_indicator = '% '
+bash_indicator = '$ '
+unknown_indicator = '? '
+format = '[$indicator]($style)'
+style = 'cyan bold'
